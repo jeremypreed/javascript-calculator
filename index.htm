@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Calculator</title>
+	<link type="text/css" href="calculator.css" rel="stylesheet" />
+	<script src="calculator.js" language="javascript" type="text/javascript"></script>
+</head>
+<body onload="clearTotal();">
+
+<div id="window">
+	<div id="calculator">
+		<div id="total" >888888888888888</div>
+		
+		<button onclick="toggleLog();" class="history">History</button>
+		<button onclick="clearTotal();" class="clear">C</button><br />
+		
+		<button onclick="aNumber(7);">7</button>
+		<button onclick="aNumber(8);">8</button>
+		<button onclick="aNumber(9);">9</button>
+		<button onclick="aOperation('+');" class="operator">+</button><br />
+		
+		<button onclick="aNumber(4);">4</button>
+		<button onclick="aNumber(5);">5</button>
+		<button onclick="aNumber(6);">6</button>
+		<button onclick="aOperation('-');" class="operator">-</button><br />
+		
+		<button onclick="aNumber(1);">1</button>
+		<button onclick="aNumber(2);">2</button>
+		<button onclick="aNumber(3);">3</button>
+		<button onclick="aOperation('*');" class="operator">&times;</button><br />
+		
+		<button onclick="aNumber('.');">.</button>
+		<button onclick="aNumber(0);">0</button>
+		<button onclick="aOperation('=');" class="equals">=</button>
+		<button onclick="aOperation('/');" class="operator">&divide;</button>
+	</div>
+	<div id="log"></div>
+</div>	
+<!-- debug
+	<button onclick="alert(getValue());">getValue</button><br />
+	<button onclick="alert(currentValue);">currentValue</button><br />
+	<button onclick="alert(log);">log</button><br />
+	<button onclick="alert(lastValue);">lastValue</button><br />
+	<button onclick="alert(operation);">operation</button><br />
+	<button onclick="alert(log[log.length-1].slice(-1));">last character</button><br />
+	<button onclick="alert(operators.indexOf(log[log.length-1].slice(-1)));">index of</button><br />
+	-->
+</body>
+</html>
