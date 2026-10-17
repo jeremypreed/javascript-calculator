@@ -54,10 +54,19 @@ function aNumber(x) {
 function aOperation(x) {
 	if (getValue().length<19){
 		if (x=="="){
-			var equation = getValue().replace("\u00F7", "/").replace("\u00D7", "*");
+			var equation = getValue().replace(/\u00F7/g, "/").replace(/\u00D7/g, "*");
 			
-			if (equation) {
+			if (equation && operators.indexOf(equation.slice(-1)) == -1) {
 				lastAnswer = eval(equation);
+				if (isFinite(lastAnswer)) {
+					// round off floating point noise, e.g. 0.1+0.2
+					lastAnswer = parseFloat(lastAnswer.toPrecision(12));
+					operatorAllow = true;
+				} else {
+					// divide by zero
+					lastAnswer = "Error";
+					operatorAllow = false;
+				}
 				currentValue = "";
 				log.push(lastAnswer);
 				document.getElementById("total").innerHTML = lastAnswer;		
@@ -75,15 +84,15 @@ function aOperation(x) {
 				log[log.length-1] = getValue().toString();
 				document.getElementById("log").innerHTML = log.join("<br />");
 				operatorAllow = false;	
+				newTotal = false;
 			} else {
-				if (getValue==""){
-				log[log.length-1] = log[log.length-1].slice(0,-1) + x;
-				document.getElementById("total").innerHTML = log[log.length-1];		
-				document.getElementById("log").innerHTML = log.join("<br />");	
+				if (getValue() != "" && !newTotal) {
+					document.getElementById("total").innerHTML = getValue().slice(0,-1) + x.replace(/\//g, '&divide;').replace(/\*/g, '&times;');
+					log[log.length-1] = getValue().toString();
+					document.getElementById("log").innerHTML = log.join("<br />");
 				}
 			}
 			decimalAllow = true;
-			newTotal = false;
 		}
 	}
 	return true;
@@ -101,3 +110,36 @@ function toggleLog() {
 	}
 	return true;
 }
+
+function backspace() {
+	var value = getValue();
+	if (newTotal || value == "") return true;
+	value = value.slice(0,-1);
+	document.getElementById("total").innerHTML = value;
+	currentValue = value.split(/[+\-\u00D7\u00F7]/).pop();
+	operatorAllow = currentValue != "";
+	decimalAllow = currentValue.indexOf(".") == -1;
+	log[log.length-1] = value;
+	document.getElementById("log").innerHTML = log.join("<br />");
+	return true;
+}
+
+document.addEventListener("keydown", function(evt) {
+	var key = evt.key;
+	if (key >= "0" && key <= "9") {
+		aNumber(parseInt(key));
+	} else if (key == ".") {
+		aNumber(".");
+	} else if (operators.indexOf(key) != -1) {
+		aOperation(key);
+	} else if (key == "Enter" || key == "=") {
+		aOperation("=");
+	} else if (key == "Backspace") {
+		backspace();
+	} else if (key == "Escape" || key == "c" || key == "C") {
+		clearTotal();
+	} else {
+		return;
+	}
+	evt.preventDefault();
+});
