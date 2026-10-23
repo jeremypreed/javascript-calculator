@@ -1,0 +1,183 @@
+/* refreshed look; calculator.css keeps the original */
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	padding: 24px 16px 64px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	background: #e8eaee;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* calculator.js sets an inline width when History is toggled */
+#window {
+	display: flex;
+	gap: 12px;
+	width: auto !important;
+}
+
+#calculator {
+	width: 340px;
+	padding: 16px;
+	background: #1f2329;
+	border-radius: 20px;
+	box-shadow: 0 12px 32px rgba(20,24,32,.25);
+}
+
+#total {
+	height: 72px;
+	line-height: 72px;
+	margin-bottom: 14px;
+	padding: 0 16px;
+	background: #12151a;
+	border-radius: 12px;
+	color: #f2f4f7;
+	font-size: 2rem;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.keys {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+
+.keys button {
+	height: 60px;
+	border: 0;
+	border-radius: 12px;
+	background: #2e333b;
+	color: #f2f4f7;
+	font: inherit;
+	font-size: 1.5rem;
+	cursor: pointer;
+	transition: background .15s, transform .05s;
+}
+
+.keys button:hover {
+	background: #3a4049;
+}
+
+.keys button:active {
+	transform: scale(.96);
+}
+
+.keys button:focus-visible {
+	outline: 2px solid #8ab4ff;
+	outline-offset: 2px;
+}
+
+.keys .history {
+	grid-column: span 3;
+	font-size: 1rem;
+	letter-spacing: .04em;
+	color: #b8c0cc;
+}
+
+.keys .operator {
+	background: #39404b;
+	color: #8ab4ff;
+}
+
+.keys .clear {
+	background: #4f7cff;
+	color: #fff;
+}
+
+.keys .clear:hover {
+	background: #6a90ff;
+}
+
+.keys .equals {
+	background: #2fb344;
+	color: #fff;
+}
+
+.keys .equals:hover {
+	background: #3cc552;
+}
+
+#log {
+	width: 220px;
+	contain: size;
+	padding: 16px;
+	overflow-y: auto;
+	background: #fff;
+	border-radius: 20px;
+	box-shadow: 0 12px 32px rgba(20,24,32,.12);
+	color: #3a404a;
+	font-size: .95rem;
+	line-height: 1.6;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+#log hr {
+	margin: 8px 0;
+	border: 0;
+	border-top: 1px solid #dde1e7;
+}
+
+/* calculator.js hides History with display: none; keep it rendered so it can slide */
+#log {
+	display: block !important;
+	white-space: nowrap;
+	transition: width .3s ease, height .3s ease, padding .3s ease, margin .3s ease, opacity .25s ease, visibility .3s;
+}
+
+#log[style*="none"] {
+	width: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: -12px;
+	overflow: hidden;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.hl {
+	color: #d03a3a;
+	font-weight: 600;
+}
+
+/* same spot as the link on the original page */
+#switch {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 20px;
+	text-align: center;
+	color: #5b6372;
+	font-size: 14px;
+}
+
+@media (max-width: 600px) {
+	#window {
+		flex-direction: column;
+		width: 100% !important;
+		max-width: 340px;
+	}
+	#calculator {
+		width: 100%;
+	}
+	#log {
+		width: 100%;
+		height: 180px;
+	}
+	#log[style*="none"] {
+		width: 100%;
+		height: 0;
+		padding: 0;
+		margin: -12px 0 0;
+	}
+}
